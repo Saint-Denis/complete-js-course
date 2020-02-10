@@ -1,38 +1,28 @@
 const isAllTrue = (array, fn) => {
   let result
-
-  try {
     if (!Array.isArray(array) || !array.length) {
-      console.log('tru')
       throw new Error('empty array')
+    } else if (typeof fn !== 'function') {
+      throw new Error('fn is not a function')
     }
-  } catch (e) {
-    e.message
-  }
-  for (let i = 0; i < array.length; i++) {
-    result = fn(array[i])
-  }
-
+    for (let i = 0; i < array.length; i++) {
+      result = fn(array[i])
+    }
+  
   return result
 }
 
-/*
- Задание 2:
 
- 2.1: Функция принимает массив и фильтрующую фукнцию и должна вернуть true или false
- Функция должна вернуть true если fn вернула true хотя бы для одного из элементов массива
-
- 2.2: Необходимо выбрасывать исключение в случаях:
-   - array не массив или пустой массив (с текстом "empty array")
-   - fn не является функцией (с текстом "fn is not a function")
-
- Зарпещено использовать встроенные методы для работы с массивами
-
- Пример:
-   isSomeTrue([1, 2, 30, 4, 5], n => n > 20) // вернет true
-   isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
- */
-function isSomeTrue(array, fn) {
+const isSomeTrue = (array, fn) => {
+    if (!Array.isArray(array) || !array.length) {
+      throw new Error('empty array')
+    } else if (typeof fn !== 'function') {
+      throw new Error('fn is not a function')
+    }
+    for (let i = 0; i < array.length; i++) {
+      if (fn(array[i]) === true) return true
+    }
+  return false
 }
 
 /*
@@ -46,7 +36,23 @@ function isSomeTrue(array, fn) {
  3.3: Необходимо выбрасывать исключение в случаях:
    - fn не является функцией (с текстом "fn is not a function")
  */
-function returnBadArguments(fn) {
+function returnBadArguments(fn, ...rest) {
+  if (rest === undefined) return []
+  
+  let arrayErrors = []
+  if (typeof fn !== 'function') {
+    throw new Error('fn is not a function')
+  }
+
+  [...rest].forEach((el, i, array) => {
+    try {
+      fn(el, i, array)
+    } catch (e) {
+      arrayErrors.push(array[i])
+    }
+    console.log('arrayErrors', arrayErrors)
+    return arrayErrors
+  })
 }
 
 /*

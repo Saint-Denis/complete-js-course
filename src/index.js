@@ -49,7 +49,7 @@ const slice = (array, from, to) => {
     end = array.length
   } 
 
-  if (!to) {
+  if (to === undefined) {
     end = array.length
   }
 

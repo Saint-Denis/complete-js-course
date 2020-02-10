@@ -33,36 +33,40 @@ const upperProps = (obj) => {
 }
  
 const slice = (array, from, to) => {
-    let newArray = []
-    let start = from || 0;
-    let end
-    
-    if (to) {
-      end = to
-    } 
+  let newArray = []
+  let start = from || 0;
+  let end
   
-    if (to > array.length) {
-      end = array.length
-    } 
-  
-    if (!to) {
-      end = array.length
-    }
-  
-    if (start < 0 && Math.abs(start) > array.length)  {
-      start = 0
-    } else if (start < 0 && Math.abs(start) <= array.length) {
-      start = array.length + from
-    }
-  
-    if (end < 0) {
-      end = array.length + to;
-    }
-  
-    for (let i = start; i < end; i++) {
-      newArray.push(array[i])
-    }
-    return newArray
+  if (to) {
+    end = to
+  } 
+
+  if (to === 0) {
+    return newArray 
+  }
+
+  if (to > array.length) {
+    end = array.length
+  } 
+
+  if (!to) {
+    end = array.length
+  }
+
+  if (start < 0 && Math.abs(start) > array.length)  {
+    start = 0
+  } else if (start < 0 && Math.abs(start) <= array.length) {
+    start = array.length + from
+  }
+
+  if (end < 0) {
+    end = array.length + to;
+  }
+
+  for (let i = start; i < end; i++) {
+    newArray.push(array[i])
+  }
+  return newArray
 }
 
 const createProxy = (obj) => {

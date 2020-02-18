@@ -1,99 +1,58 @@
 const createDivWithText = (text) => {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div;
+    const div = document.createElement('div');
+
+    div.textContent = text;
+
+    return div;
 }
 
 const prepend = (what, where) => where.prepend(what)
 
-/*
- Задание 3:
-
- 3.1: Функция должна перебрать все дочерние элементы узла, переданного в параметре where
-
- 3.2: Функция должна вернуть массив, состоящий из тех дочерних элементов, следующим соседом которых является элемент с тегом P
-
- Пример:
-   Представим, что есть разметка:
-   <body>
-      <div></div>
-      <p></p>
-      <a></a>
-      <span></span>
-      <p></p>
-   </dody>
-
-   findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
- */
-
-
 const findAllPSiblings = (where) => {
-  let array = []
-  for (const node of where.children) {
-    
-    if (node.nextElementSibling && node.nextElementSibling.tagName === 'p') {
-      console.log('node', node)
-      array.push(node)
+    let array = []
+
+    for (const node of where.children) {
+        if (node.nextElementSibling && node.nextElementSibling.tagName === 'P') {
+            array.push(node)
+        }
     }
-  }
-  console.log('array', array)
-  return array;
+
+    return array;
 }
 
-/*
- Задание 4:
-
- Функция представленная ниже, перебирает все дочерние узлы типа "элемент" внутри узла переданного в параметре where и возвращает массив из текстового содержимого найденных элементов.
- Но похоже, что в код функции закралась ошибка и она работает не так, как описано.
-
- Необходимо найти и исправить ошибку в коде так, чтобы функция работала так, как описано выше.
-
- Пример:
-   Представим, что есть разметка:
-   <body>
-      <div>привет</div>
-      <div>loftschool</div>
-   </dody>
-
-   findError(document.body) // функция должна вернуть массив с элементами 'привет' и 'loftschool'
- */
-function findError(where) {
+const findError = (where) => {
     var result = [];
 
-    for (var child of where.childNodes) {
+    for (let child of where.children) {
+        if (child.innerText === undefined) {
+            return
+        }
         result.push(child.innerText);
     }
 
     return result;
 }
 
-/*
- Задание 5:
+const deleteTextNodes = (where) => {
+    for (let node of where.childNodes) {
+        if (node.nodeType === 3) {
+            where.removeChild(node)
+        }
+    }
 
- Функция должна перебрать все дочерние узлы элемента переданного в параметре where и удалить из него все текстовые узлы
-
- Задачу необходимо решить без использования рекурсии, то есть можно не уходить вглубь дерева.
- Так же будьте внимательны при удалении узлов, т.к. можно получить неожиданное поведение при переборе узлов
-
- Пример:
-   После выполнения функции, дерево <div></div>привет<p></p>loftchool!!!
-   должно быть преобразовано в <div></div><p></p>
- */
-function deleteTextNodes(where) {
 }
 
-/*
- Задание 6:
+const deleteTextNodesRecursive = (where) => {
+    for (let i = 0; i < where.childNodes.length; i++) {
+        let child = where.childNodes[i];
 
- Выполнить предудыщее задание с использование рекурсии - то есть необходимо заходить внутрь каждого дочернего элемента (углубляться в дерево)
-
- Так же будьте внимательны при удалении узлов, т.к. можно получить неожиданное поведение при переборе узлов
-
- Пример:
-   После выполнения функции, дерево <span> <div> <b>привет</b> </div> <p>loftchool</p> !!!</span>
-   должно быть преобразовано в <span><div><b></b></div><p></p></span>
- */
-function deleteTextNodesRecursive(where) {
+        if (child.nodeType === 3) {
+            where.removeChild(child);
+            i--;
+        } else if (child.nodeType === 1) {
+            deleteTextNodesRecursive(child);
+        }
+    }
 }
 
 /*
@@ -116,7 +75,9 @@ function deleteTextNodesRecursive(where) {
      texts: 3
    }
  */
-function collectDOMStat(root) {
+
+const collectDOMStat = (root) => {
+
 }
 
 /*

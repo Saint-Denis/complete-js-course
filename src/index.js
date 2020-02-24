@@ -1,17 +1,26 @@
-const returnFirstArgument = param => param
-const sumWithDefaults = (a, b = 100) => a + b
-const returnFnResult = fn => fn()
-const returnCounter = (number = 0) => () => ++number
-const returnArgumentsArray = (...rest) => [...rest]
-const bindFunction = (fn, ...res) =>  {
-    return () => fn(...res)
+const delayPromise = (seconds) => {
+    seconds *= 1000;
+
+    return new Promise(resolve => {
+        setTimeout(function () {
+            resolve();
+        }, seconds);
+    })
+}
+
+const loadAndSortTowns = () => {
+    return fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+        .then(towns => towns.json())
+        .then(towns => towns.reduce((acc, curr) => {
+            return [...acc, curr.name]
+        }, []))
+        .then(towns => towns.sort())
+        .then(towns => towns.reduce((acc, curr) => {
+            return [...acc, { name: curr }]
+        }, []))
 }
 
 export {
-    returnFirstArgument,
-    sumWithDefaults,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+    delayPromise,
+    loadAndSortTowns
+};

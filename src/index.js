@@ -1,5 +1,5 @@
 const delayPromise = (seconds) => {
-    seconds *= 1000;
+    seconds = 1000;
 
     return new Promise(resolve => {
         setTimeout(function () {

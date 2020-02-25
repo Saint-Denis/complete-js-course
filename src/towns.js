@@ -37,17 +37,13 @@ const loadTowns = () => loadAndSortTowns()
 const getTowns = () => {
     loadTowns()
         .then(res => {
-            setTimeout(() => {
-                hideLoading()
-                cities = res
-                return cities
-            }, 1500)
+            hideLoading()
+            cities = res
+            return cities
         })
         .catch(() => {
-            setTimeout(() => {
-                hideLoading()
-                makeErrorBlock()
-            }, 1500)
+            hideLoading()
+            makeErrorBlock()
         })
 }
 
